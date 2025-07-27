@@ -66,7 +66,7 @@ ACubie* ACube::FindNextShiftCubie(TArray<FVector> AdjacentCoordinates, const FVe
 		for (AActor* Actor : NullAdjacentCubies)
 		{
 			ACubie* ShiftCubie = Cast<ACubie>(Actor);
-			if (ShiftCubie != nullptr && !ShiftCubie->IsCenterCubie && !ShiftCubie->IsExitCubie && !ShiftCubie->IsStartCubie  && !ShiftCubie->IsPlayerCubie && !ShiftCubie->IsActivePathCubie){
+			if (ShiftCubie != nullptr && !ShiftCubie->IsCenterCubie && !ShiftCubie->IsExitCubie && !ShiftCubie->IsEntranceCubie  && !ShiftCubie->IsPlayerCubie && !ShiftCubie->IsActivePathCubie){
 				if (!ShiftCubie->HasMoved ) {
 					for (const FVector& Adjacent : AdjacentCoordinates)
 					{

@@ -37,13 +37,25 @@ public:
 	bool IsExitCubie = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool IsStartCubie = false;
+	bool IsEntranceCubie = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsActivePathCubie = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsPlayerCubie = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool HasSafePath = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool BestPathSelected = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool IsAwaitingVisit = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool WasVisited = false;	
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
@@ -54,8 +66,14 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	FVector LastCoordinates = FVector();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
-	float DebugBoxDuration = 0.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float RandomChanceOfCubiePick;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float DistanceToDestination;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float Damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsPathCubie = false;
@@ -68,6 +86,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "zCollision")
 	TEnumAsByte<ECollisionChannel> TraceChannelProperty = ECC_GameTraceChannel1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
+	float DebugBoxDuration = 0.5f;
 
 	// Functions
 	
@@ -94,4 +115,8 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void BoxTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+
+	UFUNCTION(BlueprintCallable)
+	void DeleteComponents(TArray<UActorComponent*> ActorComponent);
+
 };

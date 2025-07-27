@@ -4,6 +4,7 @@
 #include "Cubie.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Cube.h"
 
 // Sets default values
 ACubie::ACubie()
@@ -190,4 +191,13 @@ void ACubie::BoxTraceForPathCubie(const FVector StartLocation, const FVector End
 	}
 }
 
-
+void ACubie::DeleteComponents(TArray<UActorComponent*> ActorComponents)
+{
+	for (UActorComponent* ActorComponent : ActorComponents) {
+		if (ActorComponent)
+		{
+			ActorComponent->DestroyComponent();
+		}
+	}
+	ActorComponents.Empty();
+}
