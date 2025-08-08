@@ -1,0 +1,2 @@
+[[Static Platform]]
+[[Moving Platform]]

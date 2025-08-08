@@ -1,0 +1,148 @@
+{
+  "savedSettings": [
+    {
+      "title": "Best",
+      "id": "b8cb2f09-94e5-4f3a-9a75-22568abf3401",
+      "setting": {
+        "filter": {
+          "searchQuery": "",
+          "showOrphans": true,
+          "showAttachments": false
+        },
+        "groups": [
+          {
+            "query": "path:Classes  ",
+            "color": "#446d2c"
+          },
+          {
+            "query": "path:Damage  ",
+            "color": "#6b241f"
+          },
+          {
+            "query": "path:Platforms  ",
+            "color": "#866032"
+          },
+          {
+            "query": "path:Interactables  ",
+            "color": "#236995"
+          },
+          {
+            "query": "path:Concepts  ",
+            "color": "#8c973b"
+          },
+          {
+            "query": "path:\"Cubism/Player Data\"  ",
+            "color": "#632e7f"
+          },
+          {
+            "query": "path:\"Cubism/Game Data\"  ",
+            "color": "#9b3b78"
+          }
+        ],
+        "display": {
+          "nodeSize": 1.8,
+          "linkThickness": 1,
+          "linkDistance": 24,
+          "nodeRepulsion": 2700,
+          "distanceFromFocal": 500,
+          "nodeHoverColor": "#000000",
+          "nodeHoverNeighbourColor": "#00ff00",
+          "linkHoverColor": "#ffbb00",
+          "showExtension": false,
+          "showFullPath": false,
+          "showCenterCoordinates": false,
+          "showLinkArrow": true,
+          "dontMoveWhenDrag": false,
+          "dagOrientation": "null"
+        }
+      },
+      "type": "global"
+    }
+  ],
+  "temporaryLocalGraphSetting": {
+    "filter": {
+      "searchQuery": "",
+      "showOrphans": true,
+      "showAttachments": false,
+      "depth": 1,
+      "linkType": "both"
+    },
+    "groups": [],
+    "display": {
+      "nodeSize": 3,
+      "linkThickness": 2,
+      "linkDistance": 100,
+      "nodeRepulsion": 2800,
+      "distanceFromFocal": 300,
+      "nodeHoverColor": "#ff0000",
+      "nodeHoverNeighbourColor": "#00ff00",
+      "linkHoverColor": "#0000ff",
+      "showExtension": false,
+      "showFullPath": false,
+      "showCenterCoordinates": true,
+      "showLinkArrow": true,
+      "dontMoveWhenDrag": false,
+      "dagOrientation": "null"
+    }
+  },
+  "temporaryGlobalGraphSetting": {
+    "filter": {
+      "searchQuery": "",
+      "showOrphans": true,
+      "showAttachments": false
+    },
+    "groups": [
+      {
+        "query": "path:Classes  ",
+        "color": "#446d2c"
+      },
+      {
+        "query": "path:Damage  ",
+        "color": "#6b241f"
+      },
+      {
+        "query": "path:Platforms  ",
+        "color": "#866032"
+      },
+      {
+        "query": "path:Interactables  ",
+        "color": "#236995"
+      },
+      {
+        "query": "path:Concepts  ",
+        "color": "#8c973b"
+      },
+      {
+        "query": "path:\"Cubism/Player Data\"  ",
+        "color": "#632e7f"
+      },
+      {
+        "query": "path:\"Cubism/Game Data\"  ",
+        "color": "#9b3b78"
+      }
+    ],
+    "display": {
+      "nodeSize": 1.8,
+      "linkThickness": 1,
+      "linkDistance": 81,
+      "nodeRepulsion": 2900,
+      "distanceFromFocal": 500,
+      "nodeHoverColor": "#000000",
+      "nodeHoverNeighbourColor": "#00ff00",
+      "linkHoverColor": "#ffbb00",
+      "showExtension": false,
+      "showFullPath": false,
+      "showCenterCoordinates": false,
+      "showLinkArrow": true,
+      "dontMoveWhenDrag": false,
+      "dagOrientation": "null"
+    }
+  },
+  "pluginSetting": {
+    "maxNodeNumber": 1000,
+    "searchEngine": "default",
+    "rightClickToPan": true,
+    "commandLeftClickNode": "openNodeInNewTab",
+    "commandRightClickNode": "focusNode"
+  }
+}

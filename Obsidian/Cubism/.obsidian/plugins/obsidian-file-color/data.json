@@ -1,0 +1,102 @@
+{
+  "cascadeColors": true,
+  "colorBackground": true,
+  "palette": [
+    {
+      "id": "0XhFYRlnfEULRqbmY-Zk9",
+      "name": "Red",
+      "value": "#ff0000"
+    },
+    {
+      "id": "iyIRrWN42_O__JRoinw2G",
+      "name": "Green",
+      "value": "#80ff00"
+    },
+    {
+      "id": "fIzjkm_EJLxDiBp-Vxa2S",
+      "name": "Blue",
+      "value": "#00b3ff"
+    },
+    {
+      "id": "g9hDe9vOUPiv1608lpNvO",
+      "name": "Purple",
+      "value": "#ae00ff"
+    },
+    {
+      "id": "Mzv2Xss80R9DypN9WyOew",
+      "name": "Orange",
+      "value": "#ffa200"
+    },
+    {
+      "id": "r4SDoEOby1ohydn8WKXVT",
+      "name": "Yellow",
+      "value": "#eeff00"
+    },
+    {
+      "id": "ON2ww9ZeaSKxaYo7OcwpY",
+      "name": "White",
+      "value": "#ffffff"
+    },
+    {
+      "id": "eMvoelpB9Nyc3paF71Nyw",
+      "name": "Black",
+      "value": "#000000"
+    },
+    {
+      "id": "0BbxIWKafPFdcOuGPnOWz",
+      "name": "Gray",
+      "value": "#292929"
+    },
+    {
+      "id": "shU_UTCkvUCGs7fx8hOiN",
+      "name": "Pink",
+      "value": "#ff00ae"
+    }
+  ],
+  "fileColors": [
+    {
+      "path": "Cubism/Classes/Cube.md",
+      "color": "iyIRrWN42_O__JRoinw2G"
+    },
+    {
+      "path": "Cubism/Classes/Cubie.md",
+      "color": "iyIRrWN42_O__JRoinw2G"
+    },
+    {
+      "path": "Cubism/Classes",
+      "color": "iyIRrWN42_O__JRoinw2G"
+    },
+    {
+      "path": "Cubism/Damage",
+      "color": "0XhFYRlnfEULRqbmY-Zk9"
+    },
+    {
+      "path": "Cubism/Platforms",
+      "color": "Mzv2Xss80R9DypN9WyOew"
+    },
+    {
+      "path": "Cubism/Interactables",
+      "color": "fIzjkm_EJLxDiBp-Vxa2S"
+    },
+    {
+      "path": "Cubism/Concepts/Rubics Movement.md",
+      "color": "r4SDoEOby1ohydn8WKXVT"
+    },
+    {
+      "path": "Cubism/Concepts",
+      "color": "r4SDoEOby1ohydn8WKXVT"
+    },
+    {
+      "path": "Cubism",
+      "color": "eMvoelpB9Nyc3paF71Nyw"
+    },
+    {
+      "path": "Cubism/Player Data",
+      "color": "g9hDe9vOUPiv1608lpNvO"
+    },
+    {
+      "path": "Cubism/Game Data",
+      "color": "shU_UTCkvUCGs7fx8hOiN"
+    }
+  ]
+}

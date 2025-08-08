@@ -1,0 +1,8 @@
+[[Puzzle]]
+[[Traps]]
+[[Pitfalls]]
+[[Enemies]]
+[[Platform]]
+[[Pressure Plates]]
+[[Barriers]]
+[[Doors]]

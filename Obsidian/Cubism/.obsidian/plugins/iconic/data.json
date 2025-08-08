@@ -1,0 +1,95 @@
+{
+  "biggerIcons": "mobile",
+  "clickableIcons": "desktop",
+  "showAllFileIcons": false,
+  "showAllFolderIcons": false,
+  "minimalFolderIcons": true,
+  "showMarkdownTabIcons": true,
+  "showTitleIcons": true,
+  "showTagPillIcons": true,
+  "showMenuActions": true,
+  "showSuggestionIcons": true,
+  "showQuickSwitcherIcons": true,
+  "showItemName": "desktop",
+  "biggerSearchResults": "mobile",
+  "maxSearchResults": 50,
+  "colorPicker1": "list",
+  "colorPicker2": "rgb",
+  "uncolorHover": false,
+  "uncolorDrag": false,
+  "uncolorSelect": false,
+  "uncolorQuick": false,
+  "rememberDeletedItems": false,
+  "dialogState": {
+    "iconMode": true,
+    "emojiMode": true,
+    "rulePage": "file"
+  },
+  "appIcons": {},
+  "tabIcons": {},
+  "fileIcons": {
+    "Cubism/Classes": {
+      "icon": "lucide-file-code",
+      "unsynced": [
+        "e3a6ee055a27d1bc"
+      ]
+    },
+    "Cubism/Classes/Cube.md": {
+      "icon": "lucide-grid"
+    },
+    "Cubism/Classes/Cubie.md": {
+      "icon": "lucide-square"
+    },
+    "Cubism/Classes/Device.md": {
+      "icon": "lucide-printer"
+    }
+  },
+  "bookmarkIcons": {},
+  "tagIcons": {},
+  "propertyIcons": {},
+  "ribbonIcons": {
+    "3d-graph-new:Global 3D Graph": {
+      "color": "green",
+      "icon": "lucide-rotate-3d"
+    },
+    "canvas:Create new canvas": {
+      "color": "red"
+    },
+    "command-palette:Open command palette": {
+      "color": "red"
+    },
+    "daily-notes:Open today's daily note": {
+      "color": "cyan"
+    },
+    "graph:Open graph view": {
+      "color": "green",
+      "icon": "🕸️"
+    },
+    "iconic:Open rulebook": {
+      "color": "orange"
+    },
+    "obsidian-importer:Open Importer": {
+      "color": "red"
+    },
+    "obsidian-textgenerator-plugin:Generate Text!": {
+      "color": "red"
+    },
+    "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": {
+      "color": "red"
+    },
+    "omnisearch:Omnisearch": {
+      "color": "yellow"
+    },
+    "switcher:Open quick switcher": {
+      "color": "purple"
+    },
+    "templates:Insert template": {
+      "color": "red"
+    },
+    "workspaces:Manage workspace layouts": {
+      "color": "red"
+    }
+  },
+  "fileRules": [],
+  "folderRules": []
+}

@@ -119,4 +119,6 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void DeleteComponents(TArray<UActorComponent*> ActorComponent);
 
+	UFUNCTION(BlueprintCallable)
+    void DeleteChildActorComponents(TArray<UChildActorComponent *> ChildActorComponents);
 };

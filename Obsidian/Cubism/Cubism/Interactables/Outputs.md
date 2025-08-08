@@ -1,0 +1,6 @@
+[[Acid]]
+[[Electricity]]
+[[Oxygen]]
+[[Water]]
+[[Vacuum]]
+[[Heat]]
