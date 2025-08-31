@@ -4,3 +4,6 @@
 [[Water]]
 [[Vacuum]]
 [[Heat]]
+[[Cold]]
+[[Light]]
+[[Radiation]]

@@ -127,4 +127,6 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	AActor* LineTraceForCubieGeneric(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+	
 };
+

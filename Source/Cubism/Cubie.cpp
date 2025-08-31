@@ -204,12 +204,11 @@ void ACubie::DeleteComponents(TArray<UActorComponent*> ActorComponents)
 
 void ACubie::DeleteChildActorComponents(TArray<UChildActorComponent*> ChildActorComponents)
 {
-	for (UActorComponent* ChiildActorComponent : ChildActorComponents) {
-		if (ChiildActorComponent)
+for (UActorComponent* ChiildActorComponent : ChildActorComponents) {
+	if (ChiildActorComponent)
 		{
 			ChiildActorComponent->DestroyComponent();
 		}
+		}
+		ChildActorComponents.Empty();
 	}
-	ChildActorComponents.Empty();
-}
-

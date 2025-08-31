@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3b496359d740abce",
+        "id": "e6dc1b0075fb37b0",
         "type": "tabs",
         "children": [
           {
-            "id": "8137f74a370edee8",
+            "id": "62fa9f4f4ba5e2d9",
             "type": "leaf",
             "state": {
               "type": "3d-graph-view-global",
@@ -179,14 +179,44 @@
             "id": "d5e43d514743c1d3",
             "type": "leaf",
             "state": {
-              "type": "graph-analysis",
+              "type": "empty",
               "state": {},
-              "icon": "GA-ICON",
-              "title": "Graph Analysis"
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          },
+          {
+            "id": "c4681d01efb0f355",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          },
+          {
+            "id": "6db2edb5c1ce0607",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          },
+          {
+            "id": "8bd30a9d919dfdb7",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 10
       }
     ],
     "direction": "horizontal",
@@ -195,23 +225,39 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "graph:Open graph view": false,
       "3d-graph-new:Global 3D Graph": false,
+      "graph:Open graph view": false,
       "daily-notes:Open today's daily note": false,
       "omnisearch:Omnisearch": false,
-      "iconic:Open rulebook": false,
       "switcher:Open quick switcher": false,
+      "iconic:Open rulebook": false,
       "workspaces:Manage workspace layouts": false,
       "command-palette:Open command palette": false,
-      "obsidian-textgenerator-plugin:Generate Text!": false,
-      "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": false,
-      "obsidian-importer:Open Importer": false,
       "canvas:Create new canvas": false,
-      "templates:Insert template": false
+      "templates:Insert template": false,
+      "obsidian-importer:Open Importer": false,
+      "obsidian-textgenerator-plugin:Generate Text!": false,
+      "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": false
     }
   },
-  "active": "8137f74a370edee8",
+  "active": "62fa9f4f4ba5e2d9",
   "lastOpenFiles": [
+    "Cubism/Interactables/Inputs.md",
+    "Cubism/Damage/Radiation.md",
+    "Cubism/Damage/Oxygen.md",
+    "Cubism/Damage/Pitfalls.md",
+    "Cubism/Damage/Electricity.md",
+    "Cubism/Damage/Acid.md",
+    "Cubism/Interactables/Action Switches.md",
+    "Cubism/Damage/Water.md",
+    "Cubism/Damage/Traps.md",
+    "Cubism/Damage/Monsters.md",
+    "Cubism/Damage/Light.md",
+    "Cubism/Damage/Enemies.md",
+    "Cubism/Damage/Cold.md",
+    "Cubism/Interactables/Outputs.md",
+    "Untitled 1.md",
+    "Cubism/Damage/Heat.md",
     "Cubism/Player Data/Player.md",
     "Cubism/Player Data/Player Meters (UI).md",
     "Cubism/Player Data/Power-Ups.md",
@@ -222,22 +268,6 @@
     "Cubism/Player Data/Multiplayers.md",
     "Cubism/Concepts/External Controllers (CubeAdmins).md",
     "Cubism/Classes/Cube.md",
-    "Cubism/Interactables/Action Switches.md",
-    "Cubism/Interactables/Door Locks.md",
-    "Cubism/Classes/Device.md",
-    "Cubism/Interactables/Doors.md",
-    "Cubism/Interactables/Inputs.md",
-    "Cubism/Interactables/Pressure Plates.md",
-    "Cubism/Player Data/Player Actions.md",
-    "Cubism/Interactables/Outputs.md",
-    "Cubism/Damage/Water.md",
-    "Cubism/Damage/Vacuum.md",
-    "Cubism/Damage/Oxygen.md",
-    "Cubism/Damage/Heat.md",
-    "Cubism/Damage/Electricity.md",
-    "Cubism/Damage/Acid.md",
-    "Cubism/Concepts/Interior Parallax Mapping for System Scalability.md",
-    "Cubism/Player Data/Action Costs.md",
     "Untitled",
     "Cubism/Game Data",
     "Cubism/Player Data",

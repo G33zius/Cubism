@@ -124,8 +124,8 @@
     "display": {
       "nodeSize": 1.8,
       "linkThickness": 1,
-      "linkDistance": 81,
-      "nodeRepulsion": 2900,
+      "linkDistance": 49,
+      "nodeRepulsion": 2800,
       "distanceFromFocal": 500,
       "nodeHoverColor": "#000000",
       "nodeHoverNeighbourColor": "#00ff00",
