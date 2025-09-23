@@ -1,2 +1,2 @@
-[[Outputs]]
+[[Agent Outputs]]
 [[Puzzle]]

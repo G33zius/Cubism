@@ -1,3 +1,0 @@
-[[Device]]
-[[Cubie]]
-[[Door Locks]]
