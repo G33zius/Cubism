@@ -30,32 +30,68 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool HasMoved = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsCenterCubie = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsExitCubie = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsEntranceCubie = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsActivePathCubie = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsPlayerCubie = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool HasSafePath = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool BestPathSelected = false;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool IsBestPathSelected = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsAwaitingVisit = false;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool WasVisited = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool UseCubeColoring = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool WasVisited = false;	
+	bool IsTestCubie = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	int Seed = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	FLinearColor RectLightColor = FColor::FromHex("008EFFFF");
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	FLinearColor LastColor = FColor::White;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float RectLightIntensity = 1000000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float RectLightAttenuationRad = 2150.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float LastCubieEmissive = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float RectLightBarnDoorLength = 3000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	int CubieStreamSeed = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	int Int32Max = 2147483647;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	FVector PlayerStartLocation = FVector();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
@@ -63,28 +99,28 @@ private:
 
 	// TODO: ParentCube
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	FVector LastCoordinates = FVector();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	float RandomChanceOfCubiePick;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	float DistanceToDestination;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	float Damage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsPathCubie = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	bool IsEdge = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	TArray<AActor*> PathAdjacentCubies;
 
-	UPROPERTY(EditAnywhere, Category = "zCollision")
+	UPROPERTY(EditDefaultsOnly, Category = "zCollision")
 	TEnumAsByte<ECollisionChannel> TraceChannelProperty = ECC_GameTraceChannel1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
