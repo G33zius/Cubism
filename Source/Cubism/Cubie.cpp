@@ -59,6 +59,51 @@ void ACubie::GetAdjacentCoordinates(FVector _Coordinates, TArray<FVector>& Adjac
 	AdjacentCoordinates.Add(NextCoordinates);
 }
 
+TArray<AActor*> ACubie::GetAdjacentCubies(const bool Debug){
+	FVector StartLocation;
+	GetLocationFromCoordinates(Coordinates, StartLocation);
+	constexpr float TraceLength = 500000;
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength, Debug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength * -1, Debug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength, Debug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength * -1, Debug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength, Debug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength * -1, Debug);
+	return AdjacentCubies;
+}
+
+void ACubie::LineTraceForAdjacentCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug)
+{
+	FHitResult Hit;
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+	GetWorld()->LineTraceSingleByProfile(Hit, StartLocation, EndLocation, TEXT("CubieTrace"), QueryParams);
+	if (Debug) {
+		constexpr float LifeTime = 0.2f;
+		constexpr float LineThickness = 10.0f;
+		DrawDebugLine(
+			GetWorld(),
+			StartLocation,
+			EndLocation,
+			Hit.bBlockingHit ? FColor::Red : FColor::Green,
+			false,
+			LifeTime,
+			0,
+			LineThickness
+			);
+	}
+	
+	if (Hit.bBlockingHit && IsValid(Hit.GetActor()))
+	{
+		AdjacentCubies.AddUnique(Hit.GetActor());
+		//UE_LOG(LogTemp, Log, TEXT("Trace hit actor: %s"), *Hit.GetActor()->GetName());
+	}
+	else
+	{
+		//UE_LOG(LogTemp, Log, TEXT("No Actors were hit"));
+	}
+}
+
 ACubie* ACubie::FindNextPathCubie(const bool Debug)
 {
 	FVector StartLocation;
@@ -70,7 +115,6 @@ ACubie* ACubie::FindNextPathCubie(const bool Debug)
 	LineTraceForPathCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength * -1, Debug);
 	LineTraceForPathCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength, Debug);
 	LineTraceForPathCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength * -1, Debug);
-
 	if (PathAdjacentCubies.Num() > 0) {
 		Algo::RandomShuffle(PathAdjacentCubies);
 		for (AActor* Actor : PathAdjacentCubies)

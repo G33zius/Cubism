@@ -120,6 +120,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	TArray<AActor*> PathAdjacentCubies;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	TArray<AActor*> AdjacentCubies;
+
 	UPROPERTY(EditDefaultsOnly, Category = "zCollision")
 	TEnumAsByte<ECollisionChannel> TraceChannelProperty = ECC_GameTraceChannel1;
 
@@ -144,6 +147,12 @@ private:
 	ACubie* FindNextPathCubie(const bool Debug);
 
 	UFUNCTION(BlueprintCallable)
+    TArray<AActor*> GetAdjacentCubies(const bool Debug);
+
+	UFUNCTION(BlueprintCallable)
+    void LineTraceForAdjacentCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+
+    UFUNCTION(BlueprintCallable)
 	ACubie* BoxFindNextPathToCubie(const bool Debug, FVector const EndCoordinates);
 
 	UFUNCTION(BlueprintCallable)
