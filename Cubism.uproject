@@ -44,6 +44,14 @@
 		{
 			"Name": "PCGNiagaraInterop",
 			"Enabled": true
+		},
+		{
+			"Name": "AIAssistant",
+			"Enabled": true
+		},
+		{
+			"Name": "NiagaraFluids",
+			"Enabled": true
 		}
 	]
 }
