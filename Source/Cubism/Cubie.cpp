@@ -11,6 +11,11 @@ ACubie::ACubie()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+    RootComponent = Root;
+	DebugCubieMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DebugCubieMesh"));
+    DebugCubieMesh->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned

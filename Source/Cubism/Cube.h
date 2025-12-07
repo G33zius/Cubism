@@ -26,8 +26,38 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData")
 	float CubieSize = 3000.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    ACubie* EntranceCubie;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    ACubie* ExitCubie;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    ACubie* CenterCubie;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    ACubie* AwaitingVisitCubie;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    ACubie* DestinationCubie;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    ACubie* PlayerCubie;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    TArray<ACubie*> AllCubies;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    TArray<ACubie*> LoadedCubies;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="zCubieReferences")
+    TArray<ACubie*> InitialEdgeCubies;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieReferences")
+	TArray<ACubie*> NullAdjacentCubies;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
@@ -53,9 +83,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
 	FVector PlayerStartLocation;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
-	TArray<AActor*> NullAdjacentCubies;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
 	int CubieMovedResetCount;
@@ -106,10 +133,12 @@ private:
 	FLinearColor Orange = FLinearColor(0.636458f, 0.124715f, 0.000456f, 1.0f);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
+	FLinearColor EggShell = FLinearColor(0.847f, 0.861f, 0.7f, 1.0f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
 	FLinearColor LastColor = FLinearColor();
 
 	// Functions
-
 	UFUNCTION(BlueprintCallable)
 	void GetAdjacentCoordinates(FVector _Coordinates, TArray<FVector>& AdjacentCoordinates);
 
@@ -127,6 +156,4 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	AActor* LineTraceForCubieGeneric(const FVector StartLocation, const FVector EndLocation, const bool Debug);
-	
 };
-

@@ -15,10 +15,6 @@
 	],
 	"Plugins": [
 		{
-			"Name": "TextureGraph",
-			"Enabled": true
-		},
-		{
 			"Name": "GeometryScripting",
 			"Enabled": true
 		},
@@ -52,6 +48,10 @@
 		{
 			"Name": "NiagaraFluids",
 			"Enabled": true
+		},
+		{
+			"Name": "RenderDocPlugin",
+			"Enabled": false
 		}
 	]
 }

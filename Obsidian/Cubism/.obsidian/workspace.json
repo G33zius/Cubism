@@ -11,48 +11,10 @@
             "id": "e834202612c74ca0",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Cubism/Classes/Cube.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Cube"
-            }
-          },
-          {
-            "id": "e932687b6cf051cd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Cubism/Player Data/Character Traits.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Character Traits"
+              "type": "3d-graph-view-global",
+              "state": {},
+              "icon": "orbit",
+              "title": "Global 3D Graph"
             }
           }
         ]
@@ -276,18 +238,26 @@
       "3d-graph-new:Global 3D Graph": false
     }
   },
-  "active": "e834202612c74ca0",
+  "active": "19abc4a6b9ccf419",
   "lastOpenFiles": [
+    "Untitled.base",
+    "Untitled 1.base",
     "Cubism/Player Data/Character Traits.md",
-    "Cubism/Classes/Cube.md",
-    "Cubism/Classes/Cubie.md",
-    "Cubism/Player Data/0 NOTES! README.md",
     "Cubism/Player Data/Action Costs.md",
+    "Cubism/Player Data/0 NOTES! README.md",
+    "Cubism/Player Data/Multiplayers.md",
+    "Cubism/Player Data/Movement Animations.md",
+    "Cubism/Player Data/De-Buffs.md",
+    "Cubism/Player Data/Cube Coins.md",
+    "Cubism/Agents/Electricity.md",
+    "Cubism/Agents/Acid.md",
+    "Cubism/Interactables/Doors.md",
+    "Cubism/Classes/Cubie.md",
+    "Cubism/Classes/Cube.md",
     "Cubism/Player Data/Player Attributes.md",
     "Cubism/Player Data/Player.md",
     "Cubism/Player Data/Power-Ups.md",
     "Cubism/Player Data/Tools for Actions.md",
-    "Cubism/Agents/Acid.md",
     "Cubism/Agents/Light.md",
     "Cubism/Agents/Cold.md",
     "Elements/Oxygen.md",
@@ -299,21 +269,12 @@
     "Cubism/Interactables/Barriers.md",
     "Cubism/Player Data/WristWatch.md",
     "Cubism/Player Data/Player Meters (UI).md",
-    "Cubism/Agents/Radiation.md",
-    "Cubism/Interactables/Pitfalls.md",
-    "Cubism/Agents/Electricity.md",
-    "Cubism/Interactables/Action Switches.md",
-    "Molecule/Water.md",
-    "Cubism/Interactables/Traps.md",
-    "Cubism/Interactables/Monsters.md",
     "Cubism/Game Data",
     "Cubism/Player Data",
     "Cubism",
     "Cubism/Concepts",
     "Cubism/Interactables",
     "Cubism/Platforms",
-    "Cubism/Agents",
-    "Cubism/Classes",
     "Untitled.canvas",
     "Canvas.canvas"
   ]

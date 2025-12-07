@@ -106,7 +106,7 @@ void ACube::LineTraceForShiftCubie(const FVector StartLocation, const FVector En
 	}
 	if (Hit.bBlockingHit && IsValid(Hit.GetActor()))
 	{
-		NullAdjacentCubies.AddUnique(Hit.GetActor());
+		NullAdjacentCubies.AddUnique(Cast<ACubie>(Hit.GetActor()));
 		//UE_LOG(LogTemp, Log, TEXT("Trace hit actor: %s"), *Hit.GetActor()->GetName());
 	}
 	else
