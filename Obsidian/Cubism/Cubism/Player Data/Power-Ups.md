@@ -1,0 +1,1 @@
+dice - one roll - shows safe door path

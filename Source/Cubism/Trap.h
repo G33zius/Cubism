@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CubismCharacter.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Trap.generated.h"
 
 // class UNiagaraComponent;
+class ARoom;
 
 UCLASS()
 class CUBISM_API ATrap : public AActor
@@ -18,18 +21,34 @@ public:
 	// Sets default values for this actor's properties
 	ATrap();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zTrapData")
+	// FText TrapType;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData")
+	float ActivationDistance = 3000.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData")
+	float FireScale = 1.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zRoomData")
+	ARoom* ParentRoom;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData")
+	float SaturationRate = 0.01f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zComponents")
+	UBoxComponent* TrapCollisionBox;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData")
+	float TrapOxygenUse = 0.0f;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zTrapData")
-	// FText TrapType;
-
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
 	USceneComponent* Root;
 
@@ -39,24 +58,16 @@ protected:
 	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
 	// UNiagaraComponent* TrapEffect;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
-	UBoxComponent* TrapCollisionBox;
-
-
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData", meta = (AllowPrivateAccess = "true"))
 	float BaseDamage = 10.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData", meta = (AllowPrivateAccess = "true"))
-	float CalculatedDamage = 10.0f;
+	UFUNCTION(BlueprintCallable)
+	void GetDistanceToPlayer(float& DistanceToPlayer);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData", meta = (AllowPrivateAccess = "true"))
-	FVector DistanceToPlayer = FVector::ZeroVector;
+	UFUNCTION(BlueprintCallable)
+	void GetPlayer(ACubismCharacter*& Player);
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData", meta = (AllowPrivateAccess = "true"))
-	float ActivationDistance = 3000.0f;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zTrapData", meta = (AllowPrivateAccess = "true"))
-	float SaturationRate = .01f;
-
+	UFUNCTION(BlueprintCallable)
+	void SetCalculatedDamageInverseSquare(float _DistanceToPlayer, float& CalculatedDamage);
 };

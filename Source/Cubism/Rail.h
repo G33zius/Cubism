@@ -25,6 +25,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
+    UBoxComponent* RailCollisionBox;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
 	USceneComponent* Root;
@@ -33,13 +36,9 @@ protected:
     UStaticMeshComponent* RailMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
-    UBoxComponent* RailCollisionBox;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
 	URectLightComponent* RectLight;
 
 private:
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zRailData", meta = (AllowPrivateAccess = "true"))
 	float RailThickness = 10.0f;
 

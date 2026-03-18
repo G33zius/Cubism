@@ -9,7 +9,8 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"Engine"
+				"Engine",
+				"CinematicCamera"
 			]
 		}
 	],
@@ -52,6 +53,44 @@
 		{
 			"Name": "RenderDocPlugin",
 			"Enabled": false
+		},
+		{
+			"Name": "WidgetEditorToolPalette",
+			"Enabled": true
+		},
+		{
+			"Name": "StaticMeshEditorModeling",
+			"Enabled": true
+		},
+		{
+			"Name": "ChordPBRGenerator",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher/ue/Fab/product/c5543fc4-2401-47bf-9ab7-2859820ccf35"
+		},
+		{
+			"Name": "TechAudioTools",
+			"Enabled": true
+		},
+		{
+			"Name": "BlueLine",
+			"Enabled": false
+		},
+		{
+			"Name": "MetasoundExperimental",
+			"Enabled": true
+		},
+		{
+			"Name": "R3PLICA",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/c069d22e-6a97-415f-9938-f2ef85e5fe78"
+		},
+		{
+			"Name": "UEColorTools",
+			"Enabled": true
+		},
+		{
+			"Name": "OpenXR",
+			"Enabled": true
 		}
 	]
 }

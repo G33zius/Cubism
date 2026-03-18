@@ -6,11 +6,15 @@
 #include "GameFramework/Actor.h"
 #include "Components/RectLightComponent.h"
 #include "Algo/RandomShuffle.h"
+#include "Kismet/GameplayStatics.h"
 #include "Cubie.generated.h"
 
-class ADoor;
+
 class ACube;
+class ACubieDoor;
+class AShaft;
 class ARail;
+class ARoom;
 
 UCLASS()
 class CUBISM_API ACubie : public AActor
@@ -21,52 +25,50 @@ public:
 	// Sets default values for this actor's properties
 	ACubie();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData")
 	FVector Coordinates = FVector();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieData")
-	bool HasMoved = false;
+	bool bHasMoved = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsCenterCubie = false;
+	bool bIsCenterCubie = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsExitCubie = false;
+	bool bIsExitCubie = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsEntranceCubie = false;
+	bool bIsEntranceCubie = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsActivePathCubie = false;
+	bool bIsActivePathCubie = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsPlayerCubie = false;
+	bool bIsPlayerCubie = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool HasSafePath = false;
+	bool bHasSafePath = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsBestPathSelected = false;
+	bool bIsBestPathSelected = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool IsAwaitingVisit = false;
+	bool bIsAwaitingVisit = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool WasVisited = false;
+	bool bWasVisited = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
-	bool UseCubeColoring = false;
+	bool bUseCubeColoring = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData")
-	bool IsTestCubie = false;
+	bool bIsTestCubie = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
+	bool bIsEdgeCubie = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData")
 	int Seed = 0;
@@ -117,37 +119,116 @@ public:
 	ACube* ParentCube;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zPlayerData")
-	APawn* PlayerPawn;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zPlayerData")
 	APlayerController* PlayerController;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData")
+	float CubieSize = 3000.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
+	FVector LastCoordinates = FVector();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
+	FVector RailScale = FVector(1.0f, 1.0f, 1205.0f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zComponents")
+	UStaticMesh* CubiePanelMesh;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
+	float CubiePanelLocationOffset = 1200.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool bIsPathCubie = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData")
+	TArray<FTransform> CubiePanelTransforms = TArray<FTransform>(
+	{
+		FTransform(FRotator(0.0f, 0.0f, 0.0f), FVector(-CubiePanelLocationOffset, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f)),
+		FTransform(FRotator(0.0f, 180.0f, 0.0f), FVector(CubiePanelLocationOffset, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f)),
+		FTransform(FRotator(0.0f, 90.0f, 0.0f), FVector(0.0f, -CubiePanelLocationOffset, 0.0f), FVector(1.0f, 1.0f, 1.0f)),
+		FTransform(FRotator(0.0f, -90.0f, 0.0f), FVector(0.0f, CubiePanelLocationOffset, 0.0f), FVector(1.0f, 1.0f, 1.0f)),
+		FTransform(FRotator(90.0f, 0.0f, 0.0f), FVector(0.0f, 0.0f, -CubiePanelLocationOffset), FVector(1.0f, 1.0f, 1.0f)),
+		FTransform(FRotator(-90.0f, 0.0f, 0.0f), FVector(0.0f, 0.0f, CubiePanelLocationOffset), FVector(1.0f, 1.0f, 1.0f))
+	});
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData")
+	float KineticCubeWallLocationOffset = 150.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData")
+	TArray<FVector> KineticCubeWallLocations = TArray<FVector>(
+	{
+		FVector(KineticCubeWallLocationOffset, 0.0f, 0.0f),
+		FVector(CubieSize - KineticCubeWallLocationOffset, 0.0f, 0.0f),
+		FVector(0.0f, KineticCubeWallLocationOffset, 0.0f),
+		FVector(0.0f, CubieSize - KineticCubeWallLocationOffset, 0.0f),
+		FVector(0.0f, 0.0f, KineticCubeWallLocationOffset),
+		FVector(0.0f, 0.0f, CubieSize - KineticCubeWallLocationOffset)
+	});
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateOxygen(float Change);
+	
+	UFUNCTION(BlueprintCallable)
+	void SpawnKineticCubes(bool bDoSpawn = true);
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnCubiePanels(bool bDoSpawn = true);
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnKineticCubeWalls(bool bDoSpawn = true);
+
+	UFUNCTION(BlueprintCallable)
+	void CacheCubieVisuals();
+
+	UFUNCTION(BlueprintCallable)
+	void RestoreCubieVisuals();
+
+	UFUNCTION(BlueprintCallable)
+	void PressCenterCubieSwitch();
+
+	UFUNCTION(BlueprintCallable)
+	void GetRandomCubiePickChance(bool bDebug = false, float DebugDuration = 3.0f);
+
+	UFUNCTION(BlueprintCallable)
+	bool DeriveCanDespawn(bool bDebug= false, float DebugDuration = 3.0f);
+
+	UFUNCTION(BlueprintCallable)
+	void DestroyActorComponentsByArray(TArray<UActorComponent*> ActorComponent);
+
+	UFUNCTION(BlueprintCallable)
+    void DestroyChildActorComponentsByArray(TArray<UChildActorComponent *> ChildActorComponents);
+
+	UFUNCTION(BlueprintCallable)
+	void DestroyActorsByArray(TArray<AActor*> Actors);
+
 protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
 	USceneComponent* Root;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
-    UStaticMeshComponent* DebugCubieMesh;
+    UStaticMeshComponent* DebugCubieMeshComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
 	TArray<URectLightComponent*> RectLights;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "zComponents")
-    TArray<UStaticMeshComponent*> CubiePanelMeshes;
+    TArray<UStaticMeshComponent*> CubiePanelMeshComponents;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zComponents")
-	TArray<ADoor*> Doors;
+	TArray<ACubieDoor*> Doors;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zComponents")
 	TArray<ARail*> Rails;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zComponents")
+	TArray<AShaft*> Shafts;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zComponents")
+	ARoom* Room;
+
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	float CubieSize = 3000.0f;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	FVector LastCoordinates = FVector();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	float RandomChanceOfCubiePick;
 
@@ -157,17 +238,17 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	float Damage;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool IsPathCubie = false;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool IsEdge = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	float KineticFallbackMeshLocationOffset = 1251.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	TArray<AActor*> PathAdjacentCubies;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	TArray<AActor*> AdjacentCubies;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	TArray<UStaticMeshComponent*> KineticCubeFallbackMeshes;
 
 	UPROPERTY(EditDefaultsOnly, Category = "zCollision")
 	TEnumAsByte<ECollisionChannel> TraceChannelProperty = ECC_GameTraceChannel1;
@@ -185,12 +266,25 @@ private:
 	float DoorOffset = 1225.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool IsLoaded = false;
+	bool bIsLoaded = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
-	bool CanDespawn = false;
+	bool bCanDespawn = false;
 
-	// Functions
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool bPanelsLoaded = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool bKineticCubesLoaded = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool bRailsLoaded = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool bDoorsLoaded = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	bool bRoomLoaded = false;
 	
 	UFUNCTION(BlueprintCallable)
 	void GetLocationFromCoordinates(FVector _Coordinates, FVector& Location);
@@ -205,26 +299,23 @@ private:
 	void GetAdjacentCoordinates(FVector _Coordinates, TArray<FVector>& AdjacentCoordinates);
 
 	UFUNCTION(BlueprintCallable)
-	ACubie* FindNextPathCubie(const bool Debug);
+	ACubie* FindNextPathCubie(const bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable)
-    TArray<AActor*> GetAdjacentCubies(const bool Debug);
+    TArray<AActor*> GetAdjacentCubies(const bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable)
-    void LineTraceForAdjacentCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+    void LineTraceForAdjacentCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug = false);
 
     UFUNCTION(BlueprintCallable)
-	ACubie* BoxFindNextPathToCubie(const bool Debug, FVector const EndCoordinates);
+	ACubie* BoxFindNextPathToCubie(FVector const EndCoordinates, const bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable)
-	void LineTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+	void LineTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable)
-	void BoxTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug);
-
+	void BoxTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug = false);
+	
 	UFUNCTION(BlueprintCallable)
-	void DeleteComponents(TArray<UActorComponent*> ActorComponent);
-
-	UFUNCTION(BlueprintCallable)
-    void DeleteChildActorComponents(TArray<UChildActorComponent *> ChildActorComponents);
+	void GetPlayer(ACubismCharacter*& Player);
 };

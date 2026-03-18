@@ -13,9 +13,14 @@ ACubie::ACubie()
 	PrimaryActorTick.bCanEverTick = false;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-    RootComponent = Root;
-	DebugCubieMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DebugCubieMesh"));
-    DebugCubieMesh->SetupAttachment(Root);
+	Root->PrimaryComponentTick.bCanEverTick = false;
+	Root->PrimaryComponentTick.bStartWithTickEnabled = false;
+	RootComponent = Root;
+
+	DebugCubieMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DebugCubieMeshComponent"));
+    DebugCubieMeshComponent->SetupAttachment(Root);
+	DebugCubieMeshComponent->PrimaryComponentTick.bCanEverTick = false;
+	DebugCubieMeshComponent->PrimaryComponentTick.bStartWithTickEnabled = false;
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +33,128 @@ void ACubie::BeginPlay()
 void ACubie::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void ACubie::UpdateOxygen(float Change)
+{
+	RoomOxygen += Change;
+}
+
+void ACubie::SpawnKineticCubes(bool bDoSpawn)
+{
+	if (bDoSpawn){
+		// UNiagaraFunctionLibrary::SpawnSystemAttached(
+	}
+}
+
+void ACubie::SpawnCubiePanels(bool bDoSpawn)
+{
+	if (bDoSpawn){
+		for (const FTransform& CubiePanelTransform : CubiePanelTransforms){
+			UStaticMeshComponent* NewMeshComponent = NewObject<UStaticMeshComponent>(this);
+			if (NewMeshComponent){
+				if (CubiePanelMesh){
+					NewMeshComponent->SetStaticMesh(CubiePanelMesh);
+					NewMeshComponent->RegisterComponent();
+					NewMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+					NewMeshComponent->SetWorldTransform(CubiePanelTransform);
+					NewMeshComponent->SetGenerateOverlapEvents(false);
+					NewMeshComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+					NewMeshComponent->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
+					NewMeshComponent->SetCollisionProfileName(TEXT("CubieFrame"));
+					NewMeshComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel1, ECollisionResponse::ECR_Block);
+					NewMeshComponent->SetMobility(EComponentMobility::Movable);
+				}else{
+					UE_LOG(LogTemp, Warning, TEXT("BP_Cubie->CubiePanelMesh is not set!"));
+				}
+			}
+		}
+	}
+}
+
+void ACubie::SpawnKineticCubeWalls(bool bDoSpawn)
+{
+	
+}
+
+void ACubie::CacheCubieVisuals()
+{
+	DMI_Cubie->GetVectorParameterValue(FName("Color"), LastColor);
+	DMI_Cubie->GetScalarParameterValue(FName("Emissive"), LastCubieEmissive);
+}
+
+void ACubie::RestoreCubieVisuals()
+{
+	// cache current color and emissive
+	FLinearColor TempColor;
+	DMI_Cubie->GetVectorParameterValue(FName("Color"), TempColor);
+	float TempEmissive;
+	DMI_Cubie->GetScalarParameterValue(FName("Emissive"), TempEmissive);
+	// restore last color and emissive
+	DMI_Cubie->SetVectorParameterValue(FName("Color"), LastColor);
+	DMI_Cubie->SetScalarParameterValue(FName("Emissive"), LastCubieEmissive);
+	// set last color and emissive to cached values
+	LastColor = TempColor;
+	LastCubieEmissive = TempEmissive;
+}
+
+void ACubie::PressCenterCubieSwitch()
+{
+	if (ParentCube == nullptr){
+		UE_LOG(LogTemp, Error, TEXT("ACubie::PressCenterCubieSwitch - ParentCube is null!"));
+		return;
+	}
+	if(bIsCenterCubie && !ParentCube->bCenterCubieSwitchPressed){
+		ParentCube->bCenterCubieSwitchPressed = true;
+		ParentCube->SetExitCubie();
+	}
+}
+
+void ACubie::GetRandomCubiePickChance(bool bDebug, float DebugDuration)
+{
+	if (ParentCube == nullptr){
+		UE_LOG(LogTemp, Error, TEXT("ACubie::GetRandomCubiePickChance - ParentCube is null!"));
+		return;
+	}
+	if (!bIsTestCubie){
+		float DistanceToDestinationCubie;
+		ParentCube->GetDistanceToDestinationCubie(DistanceToDestinationCubie);
+		DistanceToDestination = FMath::Clamp(DistanceToDestinationCubie, 0.0f, ParentCube->MaxDistanceToDestination);
+		RandomChanceOfCubiePick = FMath::Clamp((1.0f - ((DistanceToDestination / ParentCube->MaxDistanceToDestination) - 0.1f)), 0.0f, 1.0f);
+		if (RandomChanceOfCubiePick < FMath::RandRange(0.0f, 1.0f)){
+			bIsBestPathSelected = true;
+		}
+	}
+}
+
+bool ACubie::DeriveCanDespawn(bool bDebug, float DebugDuration)
+{
+	if (ParentCube == nullptr){
+		UE_LOG(LogTemp, Error, TEXT("ACubie::DeriveCanDespawn - ParentCube is null!"));
+		return false;
+	}
+	bCanDespawn = true;
+	if(ParentCube->PlayerCubie == this){
+		bCanDespawn = false;
+		if (bDebug){
+			// UKismetSystemLibrary::PrintString(this, TEXT("Cannot Despawn: Player Cubie"), true, true, FLinearColor::Red, DebugDuration);
+		}
+		return bCanDespawn;
+	}
+	AdjacentCubies = GetAdjacentCubies(bDebug);
+	for (AActor* Actor : AdjacentCubies){
+		ACubie* AdjacentCubie = Cast<ACubie>(Actor);
+		if (AdjacentCubie != nullptr){
+			if (AdjacentCubie == this){
+				bCanDespawn = false;
+				if (bDebug){
+					// UKismetSystemLibrary::PrintString(this, TEXT("Cannot Despawn: Adjacent to Player Cubie"), true, true, FLinearColor::Red, DebugDuration);
+				}
+				return bCanDespawn;
+			}
+		}
+	}
+	return bCanDespawn;
 }
 
 void ACubie::GetLocationFromCoordinates(FVector _Coordinates, FVector& Location)
@@ -64,26 +191,26 @@ void ACubie::GetAdjacentCoordinates(FVector _Coordinates, TArray<FVector>& Adjac
 	AdjacentCoordinates.Add(NextCoordinates);
 }
 
-TArray<AActor*> ACubie::GetAdjacentCubies(const bool Debug){
+TArray<AActor*> ACubie::GetAdjacentCubies(const bool bDebug){
 	FVector StartLocation;
 	GetLocationFromCoordinates(Coordinates, StartLocation);
 	constexpr float TraceLength = 500000;
-	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength, Debug);
-	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength * -1, Debug);
-	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength, Debug);
-	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength * -1, Debug);
-	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength, Debug);
-	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength * -1, Debug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength, bDebug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength * -1, bDebug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength, bDebug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength * -1, bDebug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength, bDebug);
+	LineTraceForAdjacentCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength * -1, bDebug);
 	return AdjacentCubies;
 }
 
-void ACubie::LineTraceForAdjacentCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug)
+void ACubie::LineTraceForAdjacentCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug)
 {
 	FHitResult Hit;
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
 	GetWorld()->LineTraceSingleByProfile(Hit, StartLocation, EndLocation, TEXT("CubieTrace"), QueryParams);
-	if (Debug) {
+	if (bDebug){
 		constexpr float LifeTime = 0.2f;
 		constexpr float LineThickness = 10.0f;
 		DrawDebugLine(
@@ -97,35 +224,31 @@ void ACubie::LineTraceForAdjacentCubie(const FVector StartLocation, const FVecto
 			LineThickness
 			);
 	}
-	
-	if (Hit.bBlockingHit && IsValid(Hit.GetActor()))
-	{
+
+	if (Hit.bBlockingHit && IsValid(Hit.GetActor())){
 		AdjacentCubies.AddUnique(Hit.GetActor());
 		//UE_LOG(LogTemp, Log, TEXT("Trace hit actor: %s"), *Hit.GetActor()->GetName());
-	}
-	else
-	{
+	}else{
 		//UE_LOG(LogTemp, Log, TEXT("No Actors were hit"));
 	}
 }
 
-ACubie* ACubie::FindNextPathCubie(const bool Debug)
+ACubie* ACubie::FindNextPathCubie(const bool bDebug)
 {
 	FVector StartLocation;
 	GetLocationFromCoordinates(Coordinates, StartLocation);
 	constexpr float TraceLength = 500000;
-	LineTraceForPathCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength, Debug);
-	LineTraceForPathCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength * -1, Debug);
-	LineTraceForPathCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength, Debug);
-	LineTraceForPathCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength * -1, Debug);
-	LineTraceForPathCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength, Debug);
-	LineTraceForPathCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength * -1, Debug);
-	if (PathAdjacentCubies.Num() > 0) {
+	LineTraceForPathCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength, bDebug);
+	LineTraceForPathCubie(StartLocation, StartLocation + GetActorForwardVector() * TraceLength * -1, bDebug);
+	LineTraceForPathCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength, bDebug);
+	LineTraceForPathCubie(StartLocation, StartLocation + GetActorUpVector() * TraceLength * -1, bDebug);
+	LineTraceForPathCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength, bDebug);
+	LineTraceForPathCubie(StartLocation, StartLocation + GetActorRightVector() * TraceLength * -1, bDebug);
+	if (PathAdjacentCubies.Num() > 0){
 		Algo::RandomShuffle(PathAdjacentCubies);
-		for (AActor* Actor : PathAdjacentCubies)
-		{
+		for (AActor* Actor : PathAdjacentCubies){
 			ACubie* PathCubie = Cast<ACubie>(Actor);
-			if (PathCubie != nullptr && !PathCubie->IsPathCubie) {
+			if (PathCubie != nullptr && !PathCubie->bIsPathCubie){
 				PathAdjacentCubies.Empty();
 				return PathCubie;
 			}
@@ -135,13 +258,13 @@ ACubie* ACubie::FindNextPathCubie(const bool Debug)
 	return nullptr;
 }
 
-void ACubie::LineTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug)
+void ACubie::LineTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug)
 {
 	FHitResult Hit;
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
 	GetWorld()->LineTraceSingleByProfile(Hit, StartLocation, EndLocation, TEXT("CubieTrace"), QueryParams);
-	if (Debug) {
+	if (bDebug){
 		constexpr float LifeTime = 0.2f;
 		constexpr float LineThickness = 10.0f;
 		DrawDebugLine(
@@ -156,33 +279,27 @@ void ACubie::LineTraceForPathCubie(const FVector StartLocation, const FVector En
 			);
 	}
 	
-	if (Hit.bBlockingHit && IsValid(Hit.GetActor()))
-	{
+	if (Hit.bBlockingHit && IsValid(Hit.GetActor())){
 		PathAdjacentCubies.AddUnique(Hit.GetActor());
 		//UE_LOG(LogTemp, Log, TEXT("Trace hit actor: %s"), *Hit.GetActor()->GetName());
-	}
-	else
-	{
+	}else {
 		//UE_LOG(LogTemp, Log, TEXT("No Actors were hit"));
 	}
 }
 
-ACubie* ACubie::BoxFindNextPathToCubie(const bool Debug, FVector const EndCoordinates)
+ACubie* ACubie::BoxFindNextPathToCubie(FVector const EndCoordinates, const bool bDebug)
 {
 	FVector StartLocation;
 	FVector EndLocation;
 	GetLocationFromCoordinates(Coordinates, StartLocation);
 	GetLocationFromCoordinates(EndCoordinates, EndLocation);
-	BoxTraceForPathCubie(StartLocation, EndLocation, Debug);
+	BoxTraceForPathCubie(StartLocation, EndLocation, bDebug);
 
-	if (PathAdjacentCubies.Num() > 0)
-	{
+	if (PathAdjacentCubies.Num() > 0){
 		//Algo::RandomShuffle(PathAdjacentCubies);
-		for (AActor* Actor : PathAdjacentCubies)
-		{
+		for (AActor* Actor : PathAdjacentCubies){
 			ACubie* PathCubie = Cast<ACubie>(Actor);
-			if (PathCubie != nullptr && !PathCubie->IsPathCubie)
-			{
+			if (PathCubie != nullptr && !PathCubie->bIsPathCubie){
 				PathAdjacentCubies.Empty();
 				return PathCubie;
 			}
@@ -192,7 +309,7 @@ ACubie* ACubie::BoxFindNextPathToCubie(const bool Debug, FVector const EndCoordi
 	return nullptr;
 }
 
-void ACubie::BoxTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug)
+void ACubie::BoxTraceForPathCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug)
 {
 	//TArray<FHitResult> OutHits;
 	constexpr float LifeTime = 1.0f;
@@ -210,7 +327,7 @@ void ACubie::BoxTraceForPathCubie(const FVector StartLocation, const FVector End
 	EDrawDebugTrace::Type DrawDebugType = EDrawDebugTrace::None;
 
 	//GetWorld()->SweepMultiByChannel(OutHits, StartLocation, Direction * 100, FQuat::Identity, ECC_GameTraceChannel2, SweepShape, QueryParams);
-	if (Debug) {
+	if (bDebug){
 		DrawDebugType = EDrawDebugTrace::ForDuration;
 	}
 	UKismetSystemLibrary::BoxTraceSingleByProfile(
@@ -229,35 +346,51 @@ void ACubie::BoxTraceForPathCubie(const FVector StartLocation, const FVector End
 		FColor::Red,
 		LifeTime
 		);
-	
-	if (OutHit.bBlockingHit && IsValid(OutHit.GetActor()))
-	{
+
+	if (OutHit.bBlockingHit && IsValid(OutHit.GetActor())){
 		PathAdjacentCubies.AddUnique(OutHit.GetActor());
-	}
-	else
-	{
+	}else {
 		//UE_LOG(LogTemp, Log, TEXT("No Actors were hit"));
 	}
 }
 
-void ACubie::DeleteComponents(TArray<UActorComponent*> ActorComponents)
+void ACubie::DestroyActorsByArray(TArray<AActor*> Actors)
 {
-	for (UActorComponent* ActorComponent : ActorComponents) {
-		if (ActorComponent)
-		{
+	for (AActor* Actor : Actors){
+		if (Actor != nullptr){
+			GetWorld()->DestroyActor(Actor);
+		}
+	}
+	Actors.Empty();
+}
+
+
+void ACubie::DestroyActorComponentsByArray(TArray<UActorComponent*> ActorComponents)
+{
+	for (UActorComponent* ActorComponent : ActorComponents){
+		if (ActorComponent != nullptr){
 			ActorComponent->DestroyComponent();
 		}
 	}
 	ActorComponents.Empty();
 }
 
-void ACubie::DeleteChildActorComponents(TArray<UChildActorComponent*> ChildActorComponents)
+void ACubie::DestroyChildActorComponentsByArray(TArray<UChildActorComponent*> ChildActorComponents)
 {
-for (UActorComponent* ChiildActorComponent : ChildActorComponents) {
-	if (ChiildActorComponent)
-		{
-			ChiildActorComponent->DestroyComponent();
+	for (UChildActorComponent* ChildActorComponent : ChildActorComponents){
+		if (ChildActorComponent != nullptr){
+			ChildActorComponent->DestroyComponent();
 		}
-		}
-		ChildActorComponents.Empty();
 	}
+	ChildActorComponents.Empty();
+}
+
+void ACubie::GetPlayer(ACubismCharacter*& Player)
+{
+	ACubismCharacter* CubismCharacter = Cast<ACubismCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if(CubismCharacter == nullptr){
+		Player = nullptr;
+		return;
+	}
+    Player = CubismCharacter;
+}

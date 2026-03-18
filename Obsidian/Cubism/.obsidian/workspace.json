@@ -11,6 +11,78 @@
             "id": "e834202612c74ca0",
             "type": "leaf",
             "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cubism/Player Data/Attributes.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Attributes"
+            }
+          },
+          {
+            "id": "6afc73f47fd96ec4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cubism/Agents/Acid.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Acid"
+            }
+          },
+          {
+            "id": "3310d21d4a975513",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Cubism/Player Data/Character Traits.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Character Traits"
+            }
+          },
+          {
+            "id": "f711bc1dfbf2a3f9",
+            "type": "leaf",
+            "state": {
               "type": "3d-graph-view-global",
               "state": {},
               "icon": "orbit",
@@ -238,37 +310,38 @@
       "3d-graph-new:Global 3D Graph": false
     }
   },
-  "active": "19abc4a6b9ccf419",
+  "active": "e834202612c74ca0",
   "lastOpenFiles": [
-    "Untitled.base",
-    "Untitled 1.base",
     "Cubism/Player Data/Character Traits.md",
-    "Cubism/Player Data/Action Costs.md",
+    "Cubism/Interactables/Traps.md",
+    "Cubism/Player Data/Attributes.md",
+    "Cubism/Player Data/Cube Coins.md",
     "Cubism/Player Data/0 NOTES! README.md",
-    "Cubism/Player Data/Multiplayers.md",
+    "Cubism/Player Data/WristWatch.md",
+    "Cubism/Player Data/Power-Ups.md",
+    "Cubism/Player Data/Action Costs.md",
+    "Cubism/Player Data/Player Attributes.md",
     "Cubism/Player Data/Movement Animations.md",
     "Cubism/Player Data/De-Buffs.md",
-    "Cubism/Player Data/Cube Coins.md",
-    "Cubism/Agents/Electricity.md",
-    "Cubism/Agents/Acid.md",
-    "Cubism/Interactables/Doors.md",
-    "Cubism/Classes/Cubie.md",
-    "Cubism/Classes/Cube.md",
-    "Cubism/Player Data/Player Attributes.md",
     "Cubism/Player Data/Player.md",
-    "Cubism/Player Data/Power-Ups.md",
     "Cubism/Player Data/Tools for Actions.md",
+    "Cubism/Player Data/Weighted Items.md",
+    "Cubism/Agents/Gas.md",
+    "Cubism/Agents/Vacuum.md",
     "Cubism/Agents/Light.md",
-    "Cubism/Agents/Cold.md",
-    "Elements/Oxygen.md",
-    "Cubism/Interactables/Agent Inputs.md",
-    "Molecule",
-    "Oxygen.md",
+    "Cubism/Agents/Radiation.md",
     "Cubism/Interactables/Agent Outputs.md",
+    "Cubism/Agents/Acid.md",
+    "Cubism/Agents/Heat.md",
+    "Cubism/Agents/Electricity.md",
+    "Cubism/Agents/Cold.md",
+    "Cubism/Interactables/Agent Inputs.md",
+    "Cubism/Interactables/Enemies.md",
+    "Cubism/Interactables/Pressure Plates.md",
+    "Untitled.base",
+    "Untitled 1.base",
+    "Molecule",
     "Elements",
-    "Cubism/Interactables/Barriers.md",
-    "Cubism/Player Data/WristWatch.md",
-    "Cubism/Player Data/Player Meters (UI).md",
     "Cubism/Game Data",
     "Cubism/Player Data",
     "Cubism",

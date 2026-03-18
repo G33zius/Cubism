@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Cubie.h"
+#include "CubismCharacter.h"
 #include "Algo/RandomShuffle.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Cube.generated.h"
@@ -18,11 +19,6 @@ public:
 	// Sets default values for this actor's properties
 	ACube();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -59,6 +55,40 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubieReferences")
 	TArray<ACubie*> NullAdjacentCubies;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubeData")
+	float MaxDistanceToDestination;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
+	bool bCenterCubieSwitchPressed = false;
+
+	UFUNCTION(BlueprintCallable)
+	void CheckAndDespawnCubies();
+
+	UFUNCTION(BlueprintCallable)
+	void SetMaxDistanceToDestination(const bool bDebug = false, const float DebugDuration = 3.0f, const FLinearColor DebugColor = FLinearColor::White);
+
+	UFUNCTION(BlueprintCallable)
+	void GetDistanceToDestinationCubie(float& DistanceToDestinationCubie);
+
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerStartLocation(const bool bDebug = false, const float DebugDuration = 3.0f, const FLinearColor DebugColor = FLinearColor::White);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCenterCubie(const bool bDebug = false, const float DebugDuration = 3.0f, const FLinearColor DebugColor = FLinearColor::White);
+
+	UFUNCTION(BlueprintCallable)
+	void SetEntranceCubie(const bool bDebug = false, const float DebugDuration = 3.0f, const FLinearColor DebugColor = FLinearColor::White);
+
+	UFUNCTION(BlueprintCallable)
+	void SetExitCubie(const bool bDebug = false, const float DebugDuration = 3.0f, const FLinearColor DebugColor = FLinearColor::White);
+
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerCubie(ACubie* Cubie, const bool bDebug = false, const float DebugDuration = 3.0f, const FLinearColor DebugColor = FLinearColor::White);
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
 	TArray<FVector> Coordinates;
@@ -75,8 +105,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zMovement", meta = (AllowPrivateAccess = "true"))
 	float NextMoveTime = 1.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
-	bool CenterCubieSwitchPressed = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
+	bool bIsEmptyCube = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
+	ACubie* CubieToLoad;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
 	FVector NullCoordinates;
@@ -86,9 +119,6 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
 	int CubieMovedResetCount;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubeData", meta = (AllowPrivateAccess = "true"))
-	float MaxDistanceToDestination;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zCubieData", meta = (AllowPrivateAccess = "true"))
 	float NonPrimaryCubieEmissive = .05f;
@@ -138,7 +168,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "zDebug", meta = (AllowPrivateAccess = "true"))
 	FLinearColor LastColor = FLinearColor();
 
-	// Functions
 	UFUNCTION(BlueprintCallable)
 	void GetAdjacentCoordinates(FVector _Coordinates, TArray<FVector>& AdjacentCoordinates);
 
@@ -149,11 +178,30 @@ private:
 	void GetLocationFromCoordinates(FVector _Coordinates, FVector& Location);
 
 	UFUNCTION(BlueprintCallable)
-	ACubie* FindNextShiftCubie(TArray<FVector> AdjacentCoordinates, const FVector NullLocation, const bool Debug);
+	ACubie* FindNextShiftCubie(TArray<FVector> AdjacentCoordinates, const FVector NullLocation, const bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable)
-	void LineTraceForShiftCubie(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+	void LineTraceForShiftCubie(const FVector StartLocation, const FVector EndLocation, const bool bDebug = false);
 
 	UFUNCTION(BlueprintCallable)
-	AActor* LineTraceForCubieGeneric(const FVector StartLocation, const FVector EndLocation, const bool Debug);
+	AActor* LineTraceForCubieGeneric(const FVector StartLocation, const FVector EndLocation, const bool bDebug = false);
+
+	UFUNCTION(BlueprintCallable)
+	void BuildCubieGrid();
+
+	UFUNCTION(BlueprintCallable)
+	void PrepCoordinatesArray();
+
+	UFUNCTION(BlueprintCallable)
+	void GetRandomInitialEdgeCubie (ACubie*& EdgeCubie);
+
+	UFUNCTION(BlueprintCallable)
+	void ResetMovedFlags();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnCubie(FVector _Coordinates);
+
+	UFUNCTION(BlueprintCallable)
+	bool CheckEdgeCubieByCoordinates(FVector _Coordinates);
+
 };
